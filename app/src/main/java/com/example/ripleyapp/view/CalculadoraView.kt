@@ -62,69 +62,179 @@ fun CalculadoraView(navController: NavController , selectedItem: String){
 @Composable
 fun ContenidoCalculadoraView(navController: NavController , selectedItem: String){
     var descuentoTotal by remember { mutableStateOf(0.0) }
+    var porcentajeDescuento by remember { mutableStateOf("0") }
+    var precioDescuento by remember { mutableStateOf(0.0) } // Cambié el tipo de dato a Double
+    var precioigv by remember { mutableStateOf(0.0) }
     var precioTotal by remember { mutableStateOf(0.0) }
     var precio by remember { mutableStateOf("") }
     var cantidad by remember { mutableStateOf("") }
 
 
     Column (modifier = Modifier.fillMaxWidth().background(color = Color(0xFF4d1a88)).padding(horizontal = 10.dp)){
-         Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(50.dp))
         Text(text="Calculadora" , fontSize = 40.sp , fontWeight = FontWeight.Bold , color = Color.White)
-        Text(text = "Llene los campos" , fontSize = 20.sp , color = Color.White)
+        Text(text = "Llena los campos" , fontSize = 20.sp , color = Color.White)
         Spacer(modifier = Modifier.height(20.dp))
     }
 
-    Column (modifier = Modifier.fillMaxSize().padding(vertical = 20.dp)){
+    Column (modifier = Modifier.fillMaxSize().padding(vertical = 10.dp)){
         Text(text = "Categoria Seleccionada: $selectedItem",  modifier = Modifier.padding(horizontal = 20.dp , vertical = 20.dp), fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Row (modifier = Modifier.padding(horizontal = 20.dp).padding(bottom = 40.dp)){
-            Column(modifier = Modifier.weight(1f)){
-                Text(text="Precio Total" , fontSize = 20.sp , fontWeight = FontWeight.Bold)
-                Text(text = precioTotal.toString() , fontSize = 15.sp)
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 40.dp)
+        ) {
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 10.dp)
+            ) {
+                Text(text = "Precio Total", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(text = precioTotal.toString(), fontSize = 15.sp)
             }
 
-            Box(modifier = Modifier.weight(1f)){
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 10.dp)
+            ) {
+                Text(text = "Descuento", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 Text(text = descuentoTotal.toString())
             }
         }
 
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 40.dp)
+        ) {
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 10.dp)
+            ) {
+                Text(text = "Precio con descuento", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(text = precioDescuento.toString())
+            }
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 10.dp)
+            ) {
+                Text(text = "Porcentaje", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(text = porcentajeDescuento.toString())
+            }
+
+
+
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 20.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 10.dp)
+            ) {
+                Text(text = "Precio con igv", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(text = precioigv.toString())
+            }
+        }
+
         textField1(text = "Precio" , value = precio , onValueChange = { precio = it } )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         textField1(text = "Cantidad" , value = cantidad , onValueChange = {cantidad = it})
         Button( modifier = Modifier.fillMaxWidth().padding(horizontal = 40.dp).padding(top = 20.dp) , onClick = {
 
 
-            if (!selectedItem.isNullOrBlank() && precio.isNotBlank() && cantidad.isNotBlank()){
+            if (!selectedItem.isNullOrBlank() && precio.isNotBlank() && cantidad.isNotBlank()) {
                 val precioDouble = precio.toDoubleOrNull() ?: 0.0
                 val cantidadInt = cantidad.toIntOrNull() ?: 0
 
-                precioTotal = calcularPrecio(precioDouble , cantidadInt.toDouble())
+                precioTotal = calcularPrecio(precioDouble, cantidadInt.toDouble())
 
-                if(selectedItem == "Zapatos" && precioTotal > 10000){
+                if (selectedItem == "Zapatos" && precioTotal > 1000) {
 
-                        val descuento = precioDouble * 0.10
-                        descuentoTotal = descuento
-                        precioTotal = (precioDouble - descuento) * cantidadInt
-                } else if(selectedItem == "Prendas" && precioTotal > 500){
-                    val descuento = precioDouble * 0.18
-                    descuentoTotal = descuento
-                    precioTotal = (precioDouble - descuento) * cantidadInt
-                }else if(selectedItem == "Electrodomesticos" && precioTotal > 6000){
-                    val descuento = precioDouble * 0.07
-                    descuentoTotal = descuento
-                    precioTotal = (precioDouble - descuento) * cantidadInt
-                }else if(selectedItem == "Celulares" && precioTotal > 3500){
-                    val descuento = precioDouble * 0.09
-                    descuentoTotal = descuento
-                    precioTotal = (precioDouble - descuento) * cantidadInt
-                }else if(selectedItem == "Ropa" && precioTotal > 1500){
-                    val descuento = precioDouble * 0.05
-                    descuentoTotal = descuento
-                    precioTotal = (precioDouble - descuento) * cantidadInt
-                }else if(selectedItem == "Laptops" && precioTotal > 8000){
-                    val descuento = precioDouble * 0.19
-                    descuentoTotal = descuento
-                    precioTotal = (precioDouble - descuento) * cantidadInt
+                    porcentajeDescuento = "10%"
+                    precioTotal = precioDouble * cantidadInt
+                    val descuento =  precioTotal * 0.10
+                    descuentoTotal =  descuento
+                    precioDescuento = precioTotal - descuento
+                    precioigv =  precioDescuento * 1.18
+                } else if (selectedItem == "Prendas" && precioTotal > 500) {
+
+
+                    porcentajeDescuento = "18%"
+                    precioTotal = precioDouble * cantidadInt
+                    val descuento =  precioTotal * 0.18
+                    descuentoTotal =  descuento
+                    precioDescuento = precioTotal - descuento
+                    precioigv =  precioDescuento * 1.18
+
+                } else if (selectedItem == "Electrodomesticos" && precioTotal > 6000) {
+
+                    porcentajeDescuento = "7%"
+                    precioTotal = precioDouble * cantidadInt
+                    val descuento =  precioTotal * 0.07
+                    descuentoTotal =  descuento
+                    precioDescuento = precioTotal - descuento
+                    precioigv =  precioDescuento * 1.18
+
+
+                } else if (selectedItem == "Celulares" && precioTotal > 3500) {
+
+
+                    porcentajeDescuento = "9%"
+                    precioTotal = precioDouble * cantidadInt
+                    val descuento =  precioTotal * 0.09
+                    descuentoTotal =  descuento
+                    precioDescuento = precioTotal - descuento
+                    precioigv =  precioDescuento * 1.18
+
+
+
+
+                } else if (selectedItem == "Ropa" && precioTotal > 1500) {
+
+
+                    porcentajeDescuento = "5%"
+                    precioTotal = precioDouble * cantidadInt
+                    val descuento =  precioTotal * 0.05
+                    descuentoTotal =  descuento
+                    precioDescuento = precioTotal - descuento
+                    precioigv =  precioDescuento * 1.18
+
+
+
+
+
+                } else if (selectedItem == "Laptops" && precioTotal > 8000) {
+
+
+
+
+
+                    porcentajeDescuento = "19%"
+                    precioTotal = precioDouble * cantidadInt
+                    val descuento =  precioTotal * 0.19
+                    descuentoTotal =  descuento
+                    precioDescuento = precioTotal - descuento
+                    precioigv =  precioDescuento * 1.18
+
                 }
+
+
+
+
+
+
             }
 
         }){
@@ -132,8 +242,22 @@ fun ContenidoCalculadoraView(navController: NavController , selectedItem: String
 
         }
 
+
+        OutlinedButton( modifier = Modifier.fillMaxWidth().padding(horizontal = 40.dp) , onClick = {
+            descuentoTotal = 0.0
+            porcentajeDescuento = "0"
+            precioDescuento = 0.0
+            precioTotal = 0.0
+            precioigv = 0.0
+            precio = ""
+            cantidad = ""
+        }){
+            Text("Limpiar")
+        }
+
     }
 }
+
 
 
 fun calcularPrecio(precio: Double , cantidad : Double): Double {
