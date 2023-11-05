@@ -165,27 +165,30 @@ fun ContenidoCalculadoraView(navController: NavController , selectedItem: String
                     porcentajeDescuento = "10%"
                     precioTotal = precioDouble * cantidadInt
                     val descuento =  precioTotal * 0.10
-                    descuentoTotal =  descuento
+                    descuentoTotal =  String.format("%.2f", descuento).toDouble()
                     precioDescuento = precioTotal - descuento
                     precioigv =  precioDescuento * 1.18
+                    precioigv = String.format("%.2f", precioigv).toDouble()
                 } else if (selectedItem == "Prendas" && precioTotal > 500) {
 
 
                     porcentajeDescuento = "18%"
                     precioTotal = precioDouble * cantidadInt
                     val descuento =  precioTotal * 0.18
-                    descuentoTotal =  descuento
+                    descuentoTotal =  String.format("%.2f", descuento).toDouble()
                     precioDescuento = precioTotal - descuento
                     precioigv =  precioDescuento * 1.18
+                    precioigv = String.format("%.2f", precioigv).toDouble()
 
                 } else if (selectedItem == "Electrodomesticos" && precioTotal > 6000) {
 
                     porcentajeDescuento = "7%"
                     precioTotal = precioDouble * cantidadInt
                     val descuento =  precioTotal * 0.07
-                    descuentoTotal =  descuento
+                    descuentoTotal =  String.format("%.2f", descuento).toDouble()
                     precioDescuento = precioTotal - descuento
                     precioigv =  precioDescuento * 1.18
+                    precioigv = String.format("%.2f", precioigv).toDouble()
 
 
                 } else if (selectedItem == "Celulares" && precioTotal > 3500) {
@@ -194,9 +197,10 @@ fun ContenidoCalculadoraView(navController: NavController , selectedItem: String
                     porcentajeDescuento = "9%"
                     precioTotal = precioDouble * cantidadInt
                     val descuento =  precioTotal * 0.09
-                    descuentoTotal =  descuento
+                    descuentoTotal =  String.format("%.2f", descuento).toDouble()
                     precioDescuento = precioTotal - descuento
                     precioigv =  precioDescuento * 1.18
+                    precioigv = String.format("%.2f", precioigv).toDouble()
 
 
 
@@ -207,9 +211,11 @@ fun ContenidoCalculadoraView(navController: NavController , selectedItem: String
                     porcentajeDescuento = "5%"
                     precioTotal = precioDouble * cantidadInt
                     val descuento =  precioTotal * 0.05
-                    descuentoTotal =  descuento
+                    descuentoTotal =  String.format("%.2f", descuento).toDouble()
                     precioDescuento = precioTotal - descuento
                     precioigv =  precioDescuento * 1.18
+                    precioigv = String.format("%.2f", precioigv).toDouble()
+
 
 
 
@@ -224,7 +230,7 @@ fun ContenidoCalculadoraView(navController: NavController , selectedItem: String
                     porcentajeDescuento = "19%"
                     precioTotal = precioDouble * cantidadInt
                     val descuento =  precioTotal * 0.19
-                    descuentoTotal =  descuento
+                    descuentoTotal =  String.format("%.2f", descuento).toDouble()
                     precioDescuento = precioTotal - descuento
                     precioigv =  precioDescuento * 1.18
 
@@ -232,6 +238,7 @@ fun ContenidoCalculadoraView(navController: NavController , selectedItem: String
 
                     porcentajeDescuento = "0%"
                     precioigv = precioTotal * 1.18
+                    precioigv = String.format("%.2f", precioigv).toDouble()
                 }
 
 
