@@ -228,6 +228,10 @@ fun ContenidoCalculadoraView(navController: NavController , selectedItem: String
                     precioDescuento = precioTotal - descuento
                     precioigv =  precioDescuento * 1.18
 
+                } else {
+
+                    porcentajeDescuento = "0%"
+                    precioigv = precioTotal * 1.18
                 }
 
 
